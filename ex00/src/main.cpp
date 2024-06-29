@@ -1,8 +1,6 @@
 #include "ScalarConverter.hpp"
-#include "ScalarConverter2.hpp"
-#include "ScalarConverter3.hpp"
-#include "Converter.hpp"
 #include <iostream>
+#include <cstdlib>
 
 int main()
 {
@@ -16,11 +14,28 @@ int main()
             std::cout << "double: 0.0" << std::endl;
             std::cout << "========= my ==============" << std::endl;
             ScalarConverter::convert(literal);
-            std::cout << "======== chatgpt ==========" << std::endl;
-            ScalarConverter2::convert(literal);
-            std::cout << "======== sample ===========" << std::endl;
-            ScalarConverter3::convert(literal);
-            
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            return EXIT_FAILURE;
+        }
+    }   
+    {
+        std::string literal = "";
+        try {
+            std::cout << "========= subject '' =========" << std::endl;
+            std::cout << "========= my ==============" << std::endl;
+            ScalarConverter::convert(literal);
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            return EXIT_FAILURE;
+        }
+    }   
+    {
+        std::string literal = "\n";
+        try {
+            std::cout << "========= subject \\n =========" << std::endl;
+            std::cout << "========= my ==============" << std::endl;
+            ScalarConverter::convert(literal);
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
             return EXIT_FAILURE;
@@ -37,10 +52,6 @@ int main()
             std::cout << "========= my ==============" << std::endl;
             ScalarConverter::convert(literal);
             std::cout << "======== chatgpt ==========" << std::endl;
-            ScalarConverter2::convert(literal);
-            std::cout << "======== sample ===========" << std::endl;
-            ScalarConverter3::convert(literal);
-            
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
             return EXIT_FAILURE;
@@ -56,11 +67,6 @@ int main()
             std::cout << "double: 42.0" << std::endl;
             std::cout << "========= my ==============" << std::endl;
             ScalarConverter::convert(literal);
-            std::cout << "======== chatgpt ==========" << std::endl;
-            ScalarConverter2::convert(literal);
-            std::cout << "======== sample ===========" << std::endl;
-            ScalarConverter3::convert(literal);
-            
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
             return EXIT_FAILURE;
@@ -72,11 +78,6 @@ int main()
             std::cout << "========= other test nanf =========" << std::endl;
             std::cout << "========= my ==============" << std::endl;
             ScalarConverter::convert(literal);
-            std::cout << "======== chatgpt ==========" << std::endl;
-            ScalarConverter2::convert(literal);
-            std::cout << "======== sample ===========" << std::endl;
-            ScalarConverter3::convert(literal);
-            
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
             return EXIT_FAILURE;
@@ -88,13 +89,6 @@ int main()
             std::cout << "========= other test INT_MAX =========" << std::endl;
             std::cout << "========= my ==============" << std::endl;
             ScalarConverter::convert(literal);
-            std::cout << "======== chatgpt ==========" << std::endl;
-            ScalarConverter2::convert(literal);
-            std::cout << "======== sample ===========" << std::endl;
-            Converter c;
-            c.setStr(literal);
-            c.convert();
-            std::cout << c;
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
             return EXIT_FAILURE;
@@ -106,13 +100,6 @@ int main()
             std::cout << "========= other test INT_MAX+1 =========" << std::endl;
             std::cout << "========= my ==============" << std::endl;
             ScalarConverter::convert(literal);
-            std::cout << "======== chatgpt ==========" << std::endl;
-            ScalarConverter2::convert(literal);
-            std::cout << "======== sample ===========" << std::endl;
-            Converter c;
-            c.setStr(literal);
-            c.convert();
-            std::cout << c;
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
             return EXIT_FAILURE;
@@ -124,11 +111,6 @@ int main()
             std::cout << "========= other test INT_MIN =========" << std::endl;
             std::cout << "========= my ==============" << std::endl;
             ScalarConverter::convert(literal);
-            std::cout << "======== chatgpt ==========" << std::endl;
-            ScalarConverter2::convert(literal);
-            std::cout << "======== sample ===========" << std::endl;
-            ScalarConverter3::convert(literal);
-            
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
             return EXIT_FAILURE;
@@ -140,31 +122,28 @@ int main()
             std::cout << "========= other test INT_MIN-1 =========" << std::endl;
             std::cout << "========= my ==============" << std::endl;
             ScalarConverter::convert(literal);
-            std::cout << "======== chatgpt ==========" << std::endl;
-            ScalarConverter2::convert(literal);
-            std::cout << "======== sample ===========" << std::endl;
-            Converter c;
-            c.setStr(literal);
-            c.convert();
-            std::cout << c;
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
             return EXIT_FAILURE;
         }
     }   
     {
-        std::string literal = "2147483648.0f";
+        std::string literal = "abc";
         try {
-            std::cout << "========= other test float over INT_MAX =========" << std::endl;
+            std::cout << "========= other test: abc =========" << std::endl;
             std::cout << "========= my ==============" << std::endl;
             ScalarConverter::convert(literal);
-            std::cout << "======== chatgpt ==========" << std::endl;
-            ScalarConverter2::convert(literal);
-            std::cout << "======== sample ===========" << std::endl;
-            Converter c;
-            c.setStr(literal);
-            c.convert();
-            std::cout << c;
+        } catch (std::exception &e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            return EXIT_FAILURE;
+        }
+    }   
+    {
+        std::string literal = "abc.0f";
+        try {
+            std::cout << "========= other test: abc =========" << std::endl;
+            std::cout << "========= my ==============" << std::endl;
+            ScalarConverter::convert(literal);
         } catch (std::exception &e) {
             std::cerr << "Error: " << e.what() << std::endl;
             return EXIT_FAILURE;

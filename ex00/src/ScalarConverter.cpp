@@ -1,15 +1,16 @@
 #include "ScalarConverter.hpp"
+#include "stoxs.hpp"
 #include <iomanip>
 
 bool ScalarConverter::isImpossible(LiteralType type, const std::string& literal)
 {
     try {
         if (type == INT_LITERAL) {
-            std::stoi(literal);
+            ft_stoi(literal);
         } else if (type == FLOAT_LITERAL) {
-            std::stof(literal);
+            ft_stof(literal);
         } else if (type == DOUBLE_LITERAL) {
-            std::stod(literal);
+            ft_stod(literal);
         }
     }
     catch(std::exception& e) {
@@ -29,7 +30,7 @@ void ScalarConverter::printImpossible()
 void ScalarConverter::convert(const std::string& literal)
 {
     enum LiteralType literal_type = detectLiteralType(literal);
-    if (isImpossible(literal_type, literal)) {
+    if (literal_type == NOSUCHTYPE_LITERAL || isImpossible(literal_type, literal)) {
         printImpossible();
         return ;
     }
@@ -43,21 +44,25 @@ void ScalarConverter::convert(const std::string& literal)
             break ;
         }
         case (INT_LITERAL): {
-            int v = std::stoi(literal);
-            printChar(static_cast<char>(v));
+            int v = ft_stoi(literal);
+            if (v < CHAR_MIN || v > CHAR_MAX) {
+                std::cout << "char: impossible" << std::endl;
+            } else {
+                printChar(static_cast<char>(v));
+            }
             printInt(v);
             printFloat(static_cast<float>(v));
             printDouble(static_cast<double>(v));
             break ;
         }
         case (FLOAT_LITERAL): {
-            float v = std::stof(literal);
-            if (literal == "nanf") {
+            float v = ft_stof(literal);
+            if (literal == "nanf" || v < CHAR_MIN || v > CHAR_MAX) {
                 std::cout << "char: impossible" << std::endl;
             } else {
                 printChar(static_cast<char>(v));
             }
-            if (literal == "nanf") {
+            if (literal == "nanf" || static_cast<double>(v) < INT_MIN || static_cast<double>(v) > INT_MAX) {
                 std::cout << "int: impossible" << std::endl;
             } else {
                 printInt(static_cast<int>(v));
@@ -67,13 +72,13 @@ void ScalarConverter::convert(const std::string& literal)
             break ;
         }
         case (DOUBLE_LITERAL): {
-            double v = std::stod(literal);
-            if (literal == "nan") {
+            double v = ft_stod(literal);
+            if (literal == "nan" || v < CHAR_MIN || v > CHAR_MAX) {
                 std::cout << "char: impossible" << std::endl;
             } else {
                 printChar(static_cast<char>(v));
             }
-            if (literal == "nan") {
+            if (literal == "nan" || v < INT_MIN || v > INT_MAX) {
                 std::cout << "int: impossible" << std::endl;
             } else {
                 printInt(static_cast<int>(v));
@@ -121,11 +126,11 @@ LiteralType ScalarConverter::detectLiteralType(const std::string& literal)
         return CHAR_LITERAL;
     }
     // You have to handle these pseudo literals as well (you know, for science): -inff, +inff, nanf
-    if (literal == "-inff" || literal == "+inff" || literal == "nanf") {
+    if (literal == "inff" || literal == "-inff" || literal == "+inff" || literal == "nanf") {
         return FLOAT_LITERAL;
     }
     // You have to handle these pseudo literals as well (you know, for fun): -inf, +inf and nan
-    if (literal == "-inf" || literal == "+inf" || literal == "nan") {
+    if (literal == "inf"|| literal == "-inf" || literal == "+inf" || literal == "nan") {
         return DOUBLE_LITERAL;
     }
 
@@ -138,5 +143,18 @@ LiteralType ScalarConverter::detectLiteralType(const std::string& literal)
     if (literal.find('.') != std::string::npos)
         return DOUBLE_LITERAL;
 
+    // check int type
+    size_t i = 0;
+    if (literal[0] == '+' || literal[0] == '-') {
+        if (literal.length() == 1) {
+            return NOSUCHTYPE_LITERAL;
+        }
+        i++;
+    }
+    for (; i < literal.length(); i++) {
+        if (!std::isdigit(literal[i])) {
+            return NOSUCHTYPE_LITERAL;
+        }
+    }
     return INT_LITERAL;
 }

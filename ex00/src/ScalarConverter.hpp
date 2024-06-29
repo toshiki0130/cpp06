@@ -1,8 +1,8 @@
-#include <string>
 #ifndef SCALARCONVERTER_HPP 
 # define SCALARCONVERTER_HPP 
 # include <iostream>
 # include <climits>
+# include <string>
 
 enum LiteralType {
   CHAR_LITERAL,
@@ -14,11 +14,8 @@ enum LiteralType {
 
 class ScalarConverter {
 private:
-    // The orthodox canonical class form
+    // This class is static class. we need not implement constructor.
     ScalarConverter();
-    ScalarConverter(const ScalarConverter& ob) = delete;
-    ~ScalarConverter();
-    ScalarConverter& operator=(const ScalarConverter& ob) = delete;
 
     // member functions
     static LiteralType detectLiteralType(const std::string& literal);
