@@ -1,6 +1,7 @@
 #include "stoxs.hpp"
 #include <stdexcept>
 #include <sstream>
+#include <limits> // For quiet_NaN()
 
 int ft_stoi(const std::string& str) {
     std::stringstream ss(str);
@@ -14,6 +15,9 @@ int ft_stoi(const std::string& str) {
 }
 
 float ft_stof(const std::string& str) {
+    if (str == "nanf") {
+        return std::numeric_limits<float>::quiet_NaN();
+    }
     std::stringstream ss(str);
     float result;
     ss >> result;
@@ -25,6 +29,9 @@ float ft_stof(const std::string& str) {
 }
 
 double ft_stod(const std::string& str) {
+    if (str == "nan") {
+        return std::numeric_limits<double>::quiet_NaN();
+    }
     std::stringstream ss(str);
     double result;
     ss >> result;
