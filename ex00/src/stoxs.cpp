@@ -18,6 +18,13 @@ float ft_stof(const std::string& str) {
     if (str == "nanf") {
         return std::numeric_limits<float>::quiet_NaN();
     }
+    // "inff"のチェック
+    if (str == "inff" || str == "+inff") {
+        return std::numeric_limits<float>::infinity();
+    }
+    if (str == "-inff") {
+        return -std::numeric_limits<float>::infinity();
+    }
     std::stringstream ss(str);
     float result;
     ss >> result;
@@ -31,6 +38,13 @@ float ft_stof(const std::string& str) {
 double ft_stod(const std::string& str) {
     if (str == "nan") {
         return std::numeric_limits<double>::quiet_NaN();
+    }
+    // "inf"のチェック
+    if (str == "inf" || str == "+inf") {
+        return std::numeric_limits<double>::infinity();
+    }
+    if (str == "-inf") {
+        return -std::numeric_limits<double>::infinity();
     }
     std::stringstream ss(str);
     double result;
