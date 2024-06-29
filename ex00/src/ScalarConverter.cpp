@@ -31,8 +31,7 @@ void ScalarConverter::convert(const std::string& literal)
 {
     enum LiteralType literal_type = detectLiteralType(literal);
     if (literal_type == NOSUCHTYPE_LITERAL || isImpossible(literal_type, literal)) {
-        printImpossible();
-        return ;
+        throw std::invalid_argument("Invaid literal");
     }
     switch (literal_type) {
         case (CHAR_LITERAL): {
