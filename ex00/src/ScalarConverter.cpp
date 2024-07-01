@@ -1,5 +1,6 @@
 #include "ScalarConverter.hpp"
 #include "stoxs.hpp"
+#include "utils.hpp"
 #include <iomanip>
 
 bool ScalarConverter::isImpossible(LiteralType type, const std::string& literal)
@@ -120,40 +121,19 @@ LiteralType ScalarConverter::detectLiteralType(const std::string& literal)
     if (literal.length() == 0) {
         return NOSUCHTYPE_LITERAL;
     }
-    if (literal.length() == 1
-        && !std::isdigit(literal[0])) {
-        return CHAR_LITERAL;
-    }
-    // You have to handle these pseudo literals as well (you know, for science): -inff, +inff, nanf
-    if (literal == "inff" || literal == "-inff" || literal == "+inff" || literal == "nanf") {
+
+    if (ft_isChar(literal))
+        return CHAR_LITERAL; 
+    
+    if (ft_isFloat(literal))
         return FLOAT_LITERAL;
-    }
-    // You have to handle these pseudo literals as well (you know, for fun): -inf, +inf and nan
-    if (literal == "inf"|| literal == "-inf" || literal == "+inf" || literal == "nan") {
+
+    if (ft_isDouble(literal))
         return DOUBLE_LITERAL;
-    }
-
-    // check float type
-    if (literal[literal.length() - 1] == 'f') {
-        return FLOAT_LITERAL;
-    }
-
-    // check double type
-    if (literal.find('.') != std::string::npos)
-        return DOUBLE_LITERAL;
-
+    
     // check int type
-    size_t i = 0;
-    if (literal[0] == '+' || literal[0] == '-') {
-        if (literal.length() == 1) {
-            return NOSUCHTYPE_LITERAL;
-        }
-        i++;
-    }
-    for (; i < literal.length(); i++) {
-        if (!std::isdigit(literal[i])) {
-            return NOSUCHTYPE_LITERAL;
-        }
-    }
-    return INT_LITERAL;
+    if (ft_isInt(literal))
+        return INT_LITERAL;
+
+    return NOSUCHTYPE_LITERAL;
 }
