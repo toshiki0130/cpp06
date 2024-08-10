@@ -1,6 +1,5 @@
 # include "Base.hpp"
 # include <iostream>
-# include <ctime>
 # include <cstdlib>
 # include "A.hpp"
 # include "B.hpp"
@@ -11,10 +10,8 @@ Base::~Base()
     std::cout << "[Base destructor is called]" << std::endl;
 }
 
-
 Base* generate(void)
 {
-    std::srand(static_cast<unsigned int>(std::time(0)));
     int ran_n = rand() % 3;
     switch (ran_n) {
         case (0):

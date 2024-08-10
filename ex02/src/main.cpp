@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 #include "Base.hpp"
 
 void test_pointer()
@@ -24,6 +26,7 @@ void test_reference()
 }
 
 int main() {
+    srand(static_cast<unsigned int>(std::time(0)));
     test_pointer();
     test_reference();
 }
