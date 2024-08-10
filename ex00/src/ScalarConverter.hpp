@@ -16,6 +16,9 @@ class ScalarConverter {
 private:
     // This class is static class. we need not implement constructor.
     ScalarConverter();
+    ScalarConverter(const ScalarConverter&);
+    ~ScalarConverter();
+    ScalarConverter& operator=(const ScalarConverter&);
 
     // member functions
     static LiteralType detectLiteralType(const std::string& literal);

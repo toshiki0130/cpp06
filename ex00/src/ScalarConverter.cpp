@@ -3,6 +3,22 @@
 #include "utils.hpp"
 #include <iomanip>
 
+// orthodox canonical form
+ScalarConverter::ScalarConverter()
+{};
+
+ScalarConverter::ScalarConverter(const ScalarConverter&)
+{};
+
+ScalarConverter::~ScalarConverter()
+{};
+
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter&)
+{
+    return *this;
+};
+
+// member functions
 bool ScalarConverter::isImpossible(LiteralType type, const std::string& literal)
 {
     try {

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <typeinfo>
 #include "Serializer.hpp"
 #include "Data.hpp"
 
